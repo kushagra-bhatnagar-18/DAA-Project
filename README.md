@@ -13,8 +13,8 @@ Every place is a **node** and every walkable connection is an **edge** weighted 
 - Floor changes by **stairs only** (lifts are excluded, as instructed)
 - Rooms, labs and toilets are only start or end points. A route never walks through a classroom.
 - Two ways to use it:
-  - **Terminal program** (`algorithim.py`)
-  - **Web page with Streamlit** (`app_simple.py` for a plain version, `app.py` with route drawn on the floor plans)
+  - **Terminal program** (`algo.py`)
+  - **Web page with Streamlit** ( `app.py` with route drawn on the floor plans)
 
 ---
 
