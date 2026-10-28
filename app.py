@@ -98,7 +98,7 @@ if "result" in st.session_state:
                 if view == "Floor-plan photo":
                     st.caption("No photo added for this floor yet, showing the clean diagram.")
                 st.pyplot(schematic_figure(building_map, floor, path))
-    st.caption("Orange line = route, green = start, red = end, blue triangle = stairs. "
+    st.caption("Orange line = route, green = start, red = end, blue squares = stairs. "
                "Positions are approximate.")
 
     st.subheader("Route")

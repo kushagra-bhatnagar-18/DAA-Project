@@ -149,7 +149,7 @@ def main():
         if again not in {"", "y", "yes"}:
             break
 
-    print("\nThank you for using Apostasi.")
+    print("\nThank you for using PathPilot.")
 
 
 if __name__ == "__main__":

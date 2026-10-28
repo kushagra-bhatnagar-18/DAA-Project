@@ -1,10 +1,4 @@
-"""Approximate (x, y) positions of every place, read off the ground-floor plan photo.
 
-Coordinates are in a 1269 x 952 picture space (the size the floor0 photo was
-measured at). Floors 1-3 have the same layout, so '2nd character = floor digit'
-is simply replaced by 0 to find a node's position.
-They are estimates taken by eye -- nudge any number if a dot looks off.
-"""
 
 PHOTO_REF_SIZE = (1269, 952)
 
