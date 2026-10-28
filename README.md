@@ -156,5 +156,5 @@ Python, `heapq` (priority queue), Streamlit, Matplotlib
 
 ## Authors
 
-Kushagra Bhatnagar
+Kushagra Bhatnagar AND 
 Soumabho Dey
