@@ -22,21 +22,14 @@ Every place is a **node** and every walkable connection is an **edge** weighted 
 
 ```
 PathPilot/
-├── algorithim.py        # Dijkstra + terminal program (the core algorithm)
+├── algo.py        # Dijkstra + terminal program (the core algorithm)
 ├── Maps.json            # The campus graph: places and counted steps between them
-├── app_simple.py        # Streamlit page, no pictures
 ├── app.py               # Streamlit page with route drawn on diagram / floor-plan photos
 ├── visual.py            # Drawing code used by app.py
 ├── layout.py            # Approximate (x, y) position of every place, used by app.py
 ├── requirements.txt     # Python libraries needed
-└── floorplans/
-    ├── floor0.jpg       # Ground floor plan photo
-    ├── floor1.jpg       # 1st floor
-    ├── floor2.jpg       # 2nd floor
-    └── floor3.jpg       # 3rd floor
-```
 
-`algorithim.py` + `Maps.json` are all you need for the algorithm. The other files are only for the web page. If you renamed the algorithm file (for example to `algo.py`), change the `from algorithim import ...` line in the Streamlit files to match.
+```
 
 ---
 
@@ -76,13 +69,7 @@ Approx. walking time     : 0.4 min (23 s)
 
 ### Web page (Streamlit)
 
-Plain version:
-
-```
-python -m streamlit run app_simple.py
-```
-
-Version with floor-plan drawings:
+Web Page version:
 
 ```
 python -m streamlit run app.py
@@ -116,7 +103,6 @@ The **second character is the floor**: `A003` is ground floor, `A118` is 1st flo
 2. **Dijkstra's algorithm.** It keeps the best known distance to every node (infinity at first, 0 at the start) and uses a min-heap to always process the closest unvisited node. For each neighbour it checks whether going through the current node is shorter. It stops as soon as the destination is taken out of the heap, because with positive weights that distance can no longer improve.
 3. **Rebuilding the route.** Each time a distance improves, the code remembers where it came from. Following these links back from the destination and reversing them gives the route.
 4. **Rules applied.**
-   - Lifts (`E...`) are skipped completely.
    - Only junctions and stairs can be passed through. Rooms and toilets can only be the first or last stop.
 5. **Conversion.** `metres = steps x STEP_LENGTH_M` and `time = metres / walking speed`.
 
@@ -170,4 +156,5 @@ Python, `heapq` (priority queue), Streamlit, Matplotlib
 
 ## Authors
 
-_Add your names and roll numbers here._
+Kushagra Bhatnagar
+Soumabho Dey
