@@ -2,15 +2,11 @@ import heapq
 import json
 from pathlib import Path
 
-# ---------------------------------------------------------------------------
-# ROUGH DISTANCE SETTINGS  (edit these after you calibrate -- see README note)
-# ---------------------------------------------------------------------------
-# Every edge weight in Maps.json is treated as "about one walking step".
-# One step is roughly 0.7 m for an average student.
-METRES_PER_UNIT = 0.7
-WALKING_SPEED_MPS = 1.2          # normal indoor walking speed (m/s)
 
-# Looks for Maps.json next to this file first, then one folder up.
+STEP_LENGTH_M = 0.7
+WALKING_SPEED_MPS = 1.2          
+
+
 _HERE = Path(__file__).resolve().parent
 MAP_PATH = next(
     (p for p in (_HERE / "Maps.json", _HERE.parent / "Maps.json") if p.exists()),
@@ -54,14 +50,14 @@ def dijkstra(building_map, start, destination):
     while queue:
         current_distance, current_node = heapq.heappop(queue)
 
-        # Ignore an older route when a better one has already been found.
+        
         if current_distance != distances[current_node]:
             continue
 
         if current_node == destination:
             break
 
-        # Don't cut through classrooms/toilets (only the start may be one).
+      
         if current_node != start and not is_corridor(current_node):
             continue
 
@@ -87,14 +83,14 @@ def dijkstra(building_map, start, destination):
     return path, distances[destination]
 
 
-# Keeps compatibility with the original function spelling.
+
 djikstra = dijkstra
 
 
 def to_real_units(units):
-    """Convert graph units to (metres, steps, seconds)."""
-    metres = units * METRES_PER_UNIT
-    steps = units                      # 1 unit ~ 1 step by definition above
+    """Convert counted steps to (metres, steps, seconds)."""
+    steps = units                      # edge weights are counted steps
+    metres = steps * STEP_LENGTH_M
     seconds = metres / WALKING_SPEED_MPS
     return metres, steps, seconds
 
@@ -116,8 +112,7 @@ def get_location(building_map, prompt):
 def main():
     building_map = load_map()
 
-    
-    print("PathPilot : CAMPUS 25 SHORTEST PATH FINDER")
+    print("PathPilot : CAMPUS25 PATH FINDER")
     print("Enter Q at any time to exit.")
 
     while True:
@@ -134,7 +129,7 @@ def main():
             metres, steps, seconds = to_real_units(units)
 
             
-            print("SHORTEST ROUTE (lifts excluded)")
+            print("SHORTEST ROUTE")
             
 
             print(" -> ".join(path))
@@ -142,10 +137,9 @@ def main():
             if floor_of(start) != floor_of(destination):
                 print(f"\nFloor change: {floor_of(start)} -> {floor_of(destination)} (via stairs)")
 
-            print(f"\nApprox. distance : {metres:.0f} m")
-            print(f"Approx. steps    : {steps:g}")
-            print(f"Approx. time     : {seconds / 60:.1f} min ({seconds:.0f} s)")
-            print("(rough estimate -- map units are not exact measurements)")
+            print(f"\nDistance (counted steps) : {steps:g} steps")
+            print(f"Approx. in metres        : {metres:.0f} m  (at {STEP_LENGTH_M} m per step)")
+            print(f"Approx. walking time     : {seconds / 60:.1f} min ({seconds:.0f} s)")
             
 
         except ValueError as error:
@@ -155,7 +149,7 @@ def main():
         if again not in {"", "y", "yes"}:
             break
 
-    print("\nThank you for using PathPilot.")
+    print("\nThank you for using Apostasi.")
 
 
 if __name__ == "__main__":
